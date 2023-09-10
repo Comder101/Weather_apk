@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Weather Forecast App</h1>
+    <center>
+    <div>
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button id="getWeatherBtn">Get Weather</button>
+    </div>
+    </center>
+    <div id="weatherData">
+        <h2>Current Weather</h2>
+        <p><strong>Temperature:</strong> <span id="temperature"></span> °C</p>
+        <p><strong>Humidity:</strong> <span id="humidity"></span>%</p>
+        <p><strong>Description:</strong> <span id="description"></span></p>
+        <p><strong>Weather Icon:</strong> <div style="height: 10px;"><img id="weatherIcon"  src="" ></p></div>      
+    </div>
+    <div id="forecastData">
+        <h2>5-Day Forecast</h2>
+        <p><strong>Average Temperature:</strong> <span id="averageTemp"></span> °C</p>
+        <ul id="forecastList"></ul>       
+    </div>
+    <script>
+       
+        function getWeatherData(city) {
+            $.ajax({
+                url: `/api/weather?city=${city}`,
+                method: 'GET',
+                success: function(data) {
+                    $('#temperature').text(data.temperature);
+                    $('#humidity').text(data.humidity);
+                    $('#description').text(data.description);
+                    $('#weatherIcon').attr('src', `https://openweathermap.org/img/wn/${data.weather_icon}@2x.png`);
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+            $.ajax({
+                url: `/api/forecast?city=${city}`,
+                method: 'GET',
+                success: function(forecast) {
+                    $('#forecastList').empty();
+                    let totalTemp = 0;
+                    for (const day of forecast) {
+                        $('#forecastList').append(`<li>${day.date}: ${day.temperature} °C, ${day.description}</li>`);
+                        totalTemp += parseFloat(day.temperature);
+                    }
+                    const averageTemp = (totalTemp / forecast.length).toFixed(1);
+                    $('#averageTemp').text(averageTemp);
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+        }
+        $('#getWeatherBtn').click(function() {
+            const city = $('#cityInput').val();
+            if (city) {
+                getWeatherData(city);
+            }
+        });
+    </script>
+</body>
+</html>

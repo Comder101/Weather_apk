@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #3498db;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden; 
+    
+}
+
+.form-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#cityInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#getWeatherBtn {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#weatherData {
+    float: left; 
+    width: 50%; 
+    text-align: center;
+    margin-top: 20px; 
+}
+
+#weatherIcon {
+    max-width: 100px;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+#forecastData {
+    float: right; 
+    width: 50%; 
+    text-align: center;
+    margin-top: 20px;
+    height: 300px; 
+    overflow-y: auto; 
+}
+
+#forecastList {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+#forecastList li {
+    margin-bottom: 10px;
+}
